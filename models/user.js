@@ -5,12 +5,27 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        lastName: DataTypes.STRING,
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         patronymic: DataTypes.STRING,
-        email: DataTypes.STRING,
-        phoneNumber: DataTypes.STRING,
-        address: DataTypes.STRING,
-        postcode: DataTypes.STRING
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        phoneNumber: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        postcode: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
     }, {});
     User.associate = function (models) {
         User.hasMany(models.Appeal, {

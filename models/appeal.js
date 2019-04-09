@@ -1,13 +1,35 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Appeal = sequelize.define('Appeal', {
-        disturbanceID: DataTypes.INTEGER,
-        userID: DataTypes.INTEGER,
-        dateTime: DataTypes.DATE,
-        coordinates: DataTypes.STRING,
-        numberCar: DataTypes.STRING,
-        status: DataTypes.INTEGER,
-        linkAppeal: DataTypes.STRING
+        disturbanceID: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        userID: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        dateTime: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        coordinates: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        numberCar: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        status: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        linkAppeal: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
     }, {});
     Appeal.associate = function (models) {
         Appeal.belongsTo(models.User, {

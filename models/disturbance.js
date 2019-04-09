@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Disturbance = sequelize.define('Disturbance', {
-        kind: DataTypes.STRING
+        kind: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
     }, {});
     Disturbance.associate = function (models) {
         Disturbance.hasMany(models.Appeal, {

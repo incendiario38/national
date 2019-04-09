@@ -20,7 +20,7 @@ module.exports = {
             });
     },
 
-    getByID(req, res) {
+    read(req, res) {
         return Disturbance
             .findByPk(req.params.id, {
                 include: [{
@@ -39,7 +39,7 @@ module.exports = {
             .catch((error) => res.status(400).send(error));
     },
 
-    add(req, res) {
+    create(req, res) {
         return Disturbance
             .create({
                 kind: req.body.kind,
