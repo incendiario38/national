@@ -2,8 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
     const Disturbance = sequelize.define('Disturbance', {
         kind: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         },
     }, {});
     Disturbance.associate = function (models) {

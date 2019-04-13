@@ -1,3 +1,6 @@
+// =======================
+// get the packages we need ============
+// =======================
 let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
@@ -5,24 +8,32 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
 let indexRouter = require('./routes/index');
+let securityRouter = require('./routes/security');
 let usersRouter = require('./routes/users');
 let disturbancesRouter = require('./routes/disturbances');
 let appealsRouter = require('./routes/appeals');
 
 let app = express();
 
-// view engine setup
+// =======================
+// configuration =========
+// =======================
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// import routes
+// use morgan to log requests to the console
+app.use(logger('dev'));
+
+// =======================
+// routes ================
+// =======================
 app.use('/', indexRouter);
+app.use('/', securityRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/disturbances', disturbancesRouter);
 app.use('/api/appeals', appealsRouter);
@@ -33,7 +44,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

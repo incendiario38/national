@@ -1,6 +1,6 @@
 const User = require('../models').User;
 const Disturbance = require('../models').Disturbance;
-const Images = require('../models').Images;
+const Image = require('../models').Image;
 const Appeal = require('../models').Appeal;
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
                     model: Disturbance,
                     as: 'disturbance'
                 }, {
-                    model: Images,
+                    model: Image,
                     as: 'images'
                 }],
                 order: [
@@ -37,7 +37,7 @@ module.exports = {
                     model: Disturbance,
                     as: 'disturbance'
                 }, {
-                    model: Images,
+                    model: Image,
                     as: 'images'
                 }],
             })

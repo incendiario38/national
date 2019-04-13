@@ -9,24 +9,32 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             disturbanceID: {
+                allowNull: false,
                 type: Sequelize.INTEGER
             },
             userID: {
+                allowNull: false,
                 type: Sequelize.INTEGER
             },
             dateTime: {
+                allowNull: false,
                 type: Sequelize.DATE
             },
             coordinates: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             numberCar: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             status: {
+                allowNull: false,
+                defaultValue: 0,
                 type: Sequelize.INTEGER
             },
             linkAppeal: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             createdAt: {
@@ -39,7 +47,7 @@ module.exports = {
             }
         });
     },
-    down: (queryInterface, Sequelize) => {
+    down: (queryInterface) => {
         return queryInterface.dropTable('Appeals');
     }
 };

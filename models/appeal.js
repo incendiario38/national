@@ -2,33 +2,33 @@
 module.exports = (sequelize, DataTypes) => {
     const Appeal = sequelize.define('Appeal', {
         disturbanceID: {
-            type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.INTEGER
         },
         userID: {
-            type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.INTEGER
         },
         dateTime: {
-            type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.DATE
         },
         coordinates: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         },
         numberCar: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         },
         status: {
-            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 0
+            defaultValue: 0,
+            type: DataTypes.INTEGER
         },
         linkAppeal: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         },
     }, {});
     Appeal.associate = function (models) {
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'disturbanceID',
             as: 'disturbance'
         });
-        Appeal.hasMany(models.Images, {
+        Appeal.hasMany(models.Image, {
             foreignKey: 'appealID',
             as: 'images',
         });

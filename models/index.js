@@ -1,8 +1,8 @@
 'use strict';
+require('dotenv').config();
 
 const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require('../config/config');
 
 
 let sequelize;
@@ -16,7 +16,7 @@ const db = {
     User: sequelize['import']('./user'),
     Appeal: sequelize['import']('./appeal'),
     Disturbance: sequelize['import']('./disturbance'),
-    Images: sequelize['import']('./images'),
+    Image: sequelize['import']('./image'),
 };
 
 Object.keys(db).forEach(modelName => {

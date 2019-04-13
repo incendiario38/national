@@ -9,24 +9,31 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             firstName: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             lastName: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             patronymic: {
                 type: Sequelize.STRING
             },
             email: {
-                type: Sequelize.STRING
+                allowNull: false,
+                type: Sequelize.STRING,
+                unique: true
             },
             phoneNumber: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             address: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             postcode: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             createdAt: {
@@ -39,7 +46,7 @@ module.exports = {
             }
         });
     },
-    down: (queryInterface, Sequelize) => {
+    down: (queryInterface) => {
         return queryInterface.dropTable('Users');
     }
 };

@@ -44,10 +44,11 @@ module.exports = {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 patronymic: req.body.patronymic,
-                email: req.body.email,
+                email: req.body.email.toLowerCase(),
                 phoneNumber: req.body.phoneNumber,
                 address: req.body.address,
                 postcode: req.body.postcode,
+                password: req.body.password
             })
             .then((user) => res.status(201).send(user))
             .catch((error) => res.status(400).send(error));
@@ -72,9 +73,10 @@ module.exports = {
                         firstName: req.body.firstName || user.firstName,
                         lastName: req.body.lastName || user.lastName,
                         patronymic: req.body.patronymic || user.patronymic,
-                        email: req.body.email || user.email,
+                        email: req.body.email.toLowerCase() || user.email,
                         phoneNumber: req.body.phoneNumber || user.phoneNumber,
                         postcode: req.body.postcode || user.postcode,
+                        password: req.body.password || user.password,
                     })
                     .then(() => res.status(200).send(user))
                     .catch((error) => res.status(400).send(error));

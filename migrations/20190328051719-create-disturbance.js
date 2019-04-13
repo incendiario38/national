@@ -9,6 +9,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             kind: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             createdAt: {
@@ -21,7 +22,7 @@ module.exports = {
             }
         });
     },
-    down: (queryInterface, Sequelize) => {
+    down: (queryInterface) => {
         return queryInterface.dropTable('Disturbances');
     }
 };
