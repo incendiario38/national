@@ -4,7 +4,7 @@ let path = require('path');
 let Sequelize = require('sequelize');
 let basename = path.basename(__filename);
 let config = require('../config/config');
-let sequelize = new Sequelize(config.database, config.username, config.password, config);
+let sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db.options);
 let db = {};
 
 // Загрузка моделей for PROD
