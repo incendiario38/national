@@ -1,17 +1,16 @@
-const Disturbance = require('../models').Disturbance;
-const Appeal = require('../models').Appeal;
+let models = require('../models');
 
 module.exports = {
     list(req, res) {
-        return Disturbance
+        return models.Disturbance
             .findAll({
                 include: [{
-                    model: Appeal,
+                    model: models.Appeal,
                     as: 'appeals'
                 }],
                 order: [
                     ['createdAt', 'DESC'],
-                    [{model: Appeal, as: 'appeals'}, 'createdAt', 'DESC'],
+                    [{model: models.Appeal, as: 'appeals'}, 'createdAt', 'DESC'],
                 ],
             })
             .then((disturbances) => res.status(200).send(disturbances))
@@ -21,10 +20,10 @@ module.exports = {
     },
 
     read(req, res) {
-        return Disturbance
+        return models.Disturbance
             .findByPk(req.params.id, {
                 include: [{
-                    model: Appeal,
+                    model: models.Appeal,
                     as: 'appeals'
                 }],
             })
@@ -40,7 +39,7 @@ module.exports = {
     },
 
     create(req, res) {
-        return Disturbance
+        return models.Disturbance
             .create({
                 kind: req.body.kind,
             })
@@ -49,10 +48,10 @@ module.exports = {
     },
 
     update(req, res) {
-        return Disturbance
+        return models.Disturbance
             .findByPk(req.params.id, {
                 include: [{
-                    model: Appeal,
+                    model: models.Appeal,
                     as: 'appeals'
                 }],
             })
@@ -73,7 +72,7 @@ module.exports = {
     },
 
     delete(req, res) {
-        return Disturbance
+        return models.Disturbance
             .findByPk(req.params.id)
             .then(disturbance => {
                 if (!disturbance) {

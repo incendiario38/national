@@ -1,38 +1,47 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('Users', {
+        return queryInterface.createTable('Appeals', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            firstName: {
+            DisturbanceId: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'Disturbances',
+                    key: 'id'
+                }
+            },
+            UserId: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'Users',
+                    key: 'id'
+                }
+            },
+            datetime: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            coordinates: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            lastName: {
+            numberCar: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            patronymic: {
-                type: Sequelize.STRING
-            },
-            email: {
+            status: {
                 allowNull: false,
-                type: Sequelize.STRING,
-                unique: true
+                defaultValue: 0,
+                type: Sequelize.INTEGER
             },
-            phoneNumber: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
-            address: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
-            postcode: {
+            linkAppeal: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
@@ -47,6 +56,6 @@ module.exports = {
         });
     },
     down: (queryInterface) => {
-        return queryInterface.dropTable('Users');
+        return queryInterface.dropTable('Appeals');
     }
 };

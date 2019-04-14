@@ -1,39 +1,38 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('Appeals', {
+        return queryInterface.createTable('Users', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            disturbanceID: {
-                allowNull: false,
-                type: Sequelize.INTEGER
-            },
-            userID: {
-                allowNull: false,
-                type: Sequelize.INTEGER
-            },
-            dateTime: {
-                allowNull: false,
-                type: Sequelize.DATE
-            },
-            coordinates: {
+            firstName: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            numberCar: {
+            lastName: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            status: {
-                allowNull: false,
-                defaultValue: 0,
-                type: Sequelize.INTEGER
+            patronymic: {
+                type: Sequelize.STRING
             },
-            linkAppeal: {
+            email: {
+                allowNull: false,
+                type: Sequelize.STRING,
+                unique: true
+            },
+            phone: {
+                allowNull: false,
+                type: Sequelize.STRING
+            },
+            address: {
+                allowNull: false,
+                type: Sequelize.STRING
+            },
+            postcode: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
@@ -48,6 +47,6 @@ module.exports = {
         });
     },
     down: (queryInterface) => {
-        return queryInterface.dropTable('Appeals');
+        return queryInterface.dropTable('Users');
     }
 };

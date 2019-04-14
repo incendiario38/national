@@ -1,17 +1,16 @@
-const User = require('../models').User;
-const Appeal = require('../models').Appeal;
+let models = require('../models');
 
 module.exports = {
     list(req, res) {
-        return User
+        return models.User
             .findAll({
                 include: [{
-                    model: Appeal,
+                    model: models.Appeal,
                     as: 'appeals',
                 }],
                 order: [
                     ['createdAt', 'DESC'],
-                    [{model: Appeal, as: 'appeals'}, 'createdAt', 'DESC'],
+                    [{model: models.Appeal, as: 'appeals'}, 'createdAt', 'DESC'],
                 ],
             })
             .then((user) => res.status(200).send(user))
@@ -19,11 +18,11 @@ module.exports = {
                 res.status(400).send(error);
             });
     },
-    getByID(req, res) {
-        return User
+    read(req, res) {
+        return models.User
             .findByPk(req.params.id, {
                 include: [{
-                    model: Appeal,
+                    model: models.Appeal,
                     as: 'appeals'
                 }],
             })
@@ -39,13 +38,13 @@ module.exports = {
     },
 
     create(req, res) {
-        return User
+        return models.User
             .create({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 patronymic: req.body.patronymic,
                 email: req.body.email.toLowerCase(),
-                phoneNumber: req.body.phoneNumber,
+                phone: req.body.phone,
                 address: req.body.address,
                 postcode: req.body.postcode,
                 password: req.body.password
@@ -55,10 +54,10 @@ module.exports = {
     },
 
     update(req, res) {
-        return User
+        return models.User
             .findByPk(req.params.id, {
                 include: [{
-                    model: Appeal,
+                    model: models.Appeal,
                     as: 'appeals'
                 }],
             })
@@ -85,7 +84,7 @@ module.exports = {
     },
 
     delete(req, res) {
-        return User
+        return models.User
             .findByPk(req.params.id)
             .then(user => {
                 if (!user) {

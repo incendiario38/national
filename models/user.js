@@ -1,16 +1,14 @@
 'use strict';
-
 module.exports = (sequelize, DataTypes) => {
     let User = sequelize.define('User', {
         firstName: {
-            allowNull: false,
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
             }
         },
         lastName: {
-            allowNull: false,
+
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
@@ -18,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         patronymic: DataTypes.STRING,
         email: {
-            allowNull: false,
             type: DataTypes.STRING,
             validate: {
                 isEmail: true,
@@ -26,22 +23,19 @@ module.exports = (sequelize, DataTypes) => {
             },
             unique: true
         },
-        phoneNumber: {
-            allowNull: false,
+        phone: {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
             }
         },
         address: {
-            allowNull: false,
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
             }
         },
         postcode: {
-            allowNull: false,
             type: DataTypes.STRING,
             validate: {
                 len: {
@@ -52,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         password: {
-            allowNull: false,
             type: DataTypes.STRING,
             validate: {
                 len: {
@@ -60,17 +53,14 @@ module.exports = (sequelize, DataTypes) => {
                     msg: "Minimum 6 and maximum 32 characters allowed in password",
                 },
                 notEmpty: true
-            },
-            get() {
-                return () => this.getDataValue('password')
             }
         }
     }, {});
-    User.associate = function (models) {
-        User.hasMany(models.Appeal, {
-            foreignKey: 'userID',
-            as: 'appeals',
-        });
+
+    User.associate = (models) => {
+        models.User.hasMany(models.Appeal);
+        models.User.hasMany(models.Token);
     };
+
     return User;
 };

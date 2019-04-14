@@ -1,20 +1,17 @@
-const User = require('../models').User;
-const Disturbance = require('../models').Disturbance;
-const Image = require('../models').Image;
-const Appeal = require('../models').Appeal;
+let models = require('../models');
 
 module.exports = {
     list(req, res) {
-        return Appeal
+        return models.Appeal
             .findAll({
                 include: [{
-                    model: User,
+                    model: models.User,
                     as: 'user'
                 }, {
-                    model: Disturbance,
+                    model: models.Disturbance,
                     as: 'disturbance'
                 }, {
-                    model: Image,
+                    model: models.Image,
                     as: 'images'
                 }],
                 order: [
@@ -28,13 +25,13 @@ module.exports = {
     },
 
     read(req, res) {
-        return Appeal
+        return models.Appeal
             .findByPk(req.params.id, {
                 include: [{
-                    model: User,
+                    model: models.User,
                     as: 'user'
                 }, {
-                    model: Disturbance,
+                    model: models.Disturbance,
                     as: 'disturbance'
                 }, {
                     model: Image,
@@ -53,7 +50,7 @@ module.exports = {
     },
 
     create(req, res) {
-        return Appeal
+        return models.Appeal
             .create({
                 disturbanceID: req.body.disturbanceID,
                 dateTime: req.body.dateTime,
@@ -69,16 +66,16 @@ module.exports = {
     },
 
     update(req, res) {
-        return Appeal
+        return models.Appeal
             .findByPk(req.params.id, {
                 include: [{
-                    model: User,
+                    model: models.User,
                     as: 'user'
                 }, {
-                    model: Disturbance,
+                    model: models.Disturbance,
                     as: 'disturbance'
                 }, {
-                    model: Images,
+                    model: models.Images,
                     as: 'images'
                 }],
             })
@@ -105,7 +102,7 @@ module.exports = {
     },
 
     delete(req, res) {
-        return Appeal
+        return models.Appeal
             .findByPk(req.params.id)
             .then(appeal => {
                 if (!appeal) {

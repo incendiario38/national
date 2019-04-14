@@ -1,28 +1,31 @@
 'use strict';
+
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('Images', {
+        return queryInterface.createTable('Tokens', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            AppealId: {
+            userId: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'Appeals',
+                    model: 'Users',
                     key: 'id'
                 }
             },
-            linkImage: {
+            token: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING(1000)
             },
-            kind: {
+            status: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                defaultValue: 'active',
+                type: Sequelize.ENUM,
+                values: ['active', 'inactive']
             },
             createdAt: {
                 allowNull: false,
@@ -35,6 +38,6 @@ module.exports = {
         });
     },
     down: (queryInterface) => {
-        return queryInterface.dropTable('Images');
+        return queryInterface.dropTable('Tokens');
     }
 };

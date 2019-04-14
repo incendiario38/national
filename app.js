@@ -1,57 +1,48 @@
-// =======================
-// get the packages we need ============
-// =======================
-let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
-let cookieParser = require('cookie-parser');
+let favicon = require('serve-favicon');
 let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
 
 let indexRouter = require('./routes/index');
-let securityRouter = require('./routes/security');
-let usersRouter = require('./routes/users');
-let disturbancesRouter = require('./routes/disturbances');
 let appealsRouter = require('./routes/appeals');
+let disturbancesRouter = require('./routes/disturbances');
+let usersRouter = require('./routes/users');
 
 let app = express();
 
-// =======================
-// configuration =========
-// =======================
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// use morgan to log requests to the console
-app.use(logger('dev'));
-
-// =======================
-// routes ================
-// =======================
 app.use('/', indexRouter);
-app.use('/', securityRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/disturbances', disturbancesRouter);
 app.use('/api/appeals', appealsRouter);
+app.use('/api/disturbances', disturbancesRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
+// no stacktraces leaked to user unless in development environment
 app.use(function (err, req, res) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.render('error.pug', {
+        message: err.message,
+        error: (app.get('env') === 'development') ? err : {}
+    });
 });
 
 module.exports = app;

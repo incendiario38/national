@@ -1,10 +1,9 @@
 let crypto = require('crypto');
-
-const User = require('../models').User;
+let models = require('../models');
 
 module.exports = {
     login(req, res) {
-        return User
+        return models.User
             .findOne({
                 where: {
                     email: req.body.email
@@ -27,12 +26,25 @@ module.exports = {
 
                 let token = crypto.randomBytes(128).toString('hex');
 
-                //TODO: Добавить генерацию токена и создание записи в БД для данного пользователя
+                return models.Token
+                    .create({
+                        UserId: user.id,
+                        token: token
+                    })
+                    .then((token) => {
+                        if (!token) {
+                            return res.status(400).send({
+                                success: false,
+                                message: 'Authentication failed. Token not created.'
+                            });
+                        }
 
-                return res.status(200).send({
-                    success: true,
-                    token: token
-                });
+                        return res.status(200).send({
+                            success: true,
+                            token: token.token
+                        });
+                    })
+                    .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
     }

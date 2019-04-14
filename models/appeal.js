@@ -1,49 +1,50 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const Appeal = sequelize.define('Appeal', {
-        disturbanceID: {
-            allowNull: false,
-            type: DataTypes.INTEGER
-        },
-        userID: {
-            allowNull: false,
-            type: DataTypes.INTEGER
-        },
-        dateTime: {
-            allowNull: false,
-            type: DataTypes.DATE
+    let Appeal = sequelize.define('Appeal', {
+        datetime: {
+            type: DataTypes.DATE,
+            validate: {
+                notEmpty: true,
+            }
         },
         coordinates: {
-            allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: true,
+            }
         },
-        numberCar: {
-            allowNull: false,
-            type: DataTypes.STRING
+        number_car: {
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: true,
+            }
         },
         status: {
-            allowNull: false,
             defaultValue: 0,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                notEmpty: true,
+            }
         },
-        linkAppeal: {
-            allowNull: false,
-            type: DataTypes.STRING
+        link_appeal: {
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: true,
+            }
         },
     }, {});
-    Appeal.associate = function (models) {
-        Appeal.belongsTo(models.User, {
-            foreignKey: 'userID',
-            as: 'user'
+    Appeal.associate = (models) => {
+        models.Appeal.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
         });
-        Appeal.belongsTo(models.Disturbance, {
-            foreignKey: 'disturbanceID',
-            as: 'disturbance'
+        models.Appeal.belongsTo(models.Disturbance, {
+            foreignKey: {
+                allowNull: false
+            }
         });
-        Appeal.hasMany(models.Image, {
-            foreignKey: 'appealID',
-            as: 'images',
-        });
+        models.Appeal.hasMany(models.Image);
     };
     return Appeal;
 };
