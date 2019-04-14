@@ -33,7 +33,7 @@ router.post('/login', (req, res) => {
                 });
             }
 
-            if (user.password !== req.body.password) {
+            if (!user.authenticate(req.body.password)) {
                 return res.status(400).send({
                     success: false,
                     message: 'Authentication failed. Wrong password.'

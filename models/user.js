@@ -1,4 +1,26 @@
 'use strict';
+
+let crypto = require('crypto');
+
+/**
+ * Генерирует хеш
+ * @param salt
+ * @param pwd
+ * @returns {string}
+ */
+let hashPassword = function (salt, pwd) {
+    let key = crypto.pbkdf2Sync(pwd, salt, 10, 64, 'sha512');
+    return key.toString('hex');
+};
+
+/**
+ * Генерирует соль
+ * @returns {string}
+ */
+let createSalt = function () {
+    return crypto.randomBytes(64).toString('hex');
+};
+
 module.exports = (sequelize, DataTypes) => {
     let User = sequelize.define('User', {
         firstName: {
@@ -45,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         password: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(512),
             validate: {
                 len: {
                     args: [6, 32],
@@ -53,8 +75,16 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 notEmpty: true
             }
+        },
+        salt: {
+            type: DataTypes.STRING(512),
         }
     }, {});
+
+    User.beforeCreate((user) => {
+        user.salt = createSalt();
+        user.password = hashPassword(user.salt, user.password);
+    });
 
     User.associate = (models) => {
         models.User.hasMany(models.Appeal, {
@@ -65,6 +95,15 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'userId',
             as: 'tokens'
         });
+    };
+
+    /**
+     * Возвращает true - если пароль верен, иначе - false
+     * @param password
+     * @returns {boolean}
+     */
+    User.prototype.authenticate = function (password) {
+        return hashPassword(this.salt, password) === this.password;
     };
 
     return User;
