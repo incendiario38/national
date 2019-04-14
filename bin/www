@@ -23,7 +23,7 @@ app.set('port', port);
 
 let server = http.createServer(app);
 
-models.sequelize.sync().then(function () {
+//models.sequelize.sync().then(function () {
     /**
      * Listen on provided port, on all network interfaces.
      */
@@ -32,7 +32,8 @@ models.sequelize.sync().then(function () {
     });
     server.on('error.pug', onError);
     server.on('listening', onListening);
-});
+
+//});
 
 /**
  * Normalize a port into a number, string, or false.

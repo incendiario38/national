@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     Disturbance.associate = (models) => {
-        models.Disturbance.hasMany(models.Appeal);
+        models.Disturbance.hasMany(models.Appeal, {
+            foreignKey: 'disturbanceId',
+            as: 'appeals'
+        });
     };
 
     return Disturbance;

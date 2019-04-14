@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
         models.Image.belongsTo(models.Appeal, {
             foreignKey: {
                 allowNull: false
-            }
+            },
+            as: 'appeal'
         });
     };
 

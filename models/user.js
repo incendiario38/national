@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         lastName: {
-
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
@@ -58,8 +57,14 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     User.associate = (models) => {
-        models.User.hasMany(models.Appeal);
-        models.User.hasMany(models.Token);
+        models.User.hasMany(models.Appeal, {
+            foreignKey: 'userId',
+            as: 'appeals'
+        });
+        models.User.hasMany(models.Token, {
+            foreignKey: 'userId',
+            as: 'tokens'
+        });
     };
 
     return User;

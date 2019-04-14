@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             }
         },
-        number_car: {
+        numberCar: {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             }
         },
-        link_appeal: {
+        linkAppeal: {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
@@ -37,14 +37,19 @@ module.exports = (sequelize, DataTypes) => {
         models.Appeal.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
-            }
+            },
+            as: 'user'
         });
         models.Appeal.belongsTo(models.Disturbance, {
             foreignKey: {
                 allowNull: false
-            }
+            },
+            as: 'disturbance'
         });
-        models.Appeal.hasMany(models.Image);
+        models.Appeal.hasMany(models.Image, {
+            foreignKey: 'appealId',
+            as: 'images'
+        });
     };
     return Appeal;
 };

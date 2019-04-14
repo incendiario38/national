@@ -44,7 +44,7 @@ router.post('/login', (req, res) => {
 
             return models.Token
                 .create({
-                    UserId: user.id,
+                    userId: user.id,
                     token: token
                 })
                 .then((token) => {
