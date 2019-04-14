@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     Image.associate = (models) => {
-        Image.belongsTo(models.Appeal, {
+        models.Image.belongsTo(models.Appeal, {
             foreignKey: {
                 allowNull: false
             }
