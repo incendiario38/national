@@ -10,6 +10,7 @@ let routes = require('../routes/index');
 let appeals = require('../routes/appeals');
 let disturbances = require('../routes/disturbances');
 let users = require('../routes/users');
+let images = require('../routes/images');
 
 module.exports = function (app, config) {
     let env = process.env.NODE_ENV || 'development';
@@ -31,6 +32,7 @@ module.exports = function (app, config) {
     app.use('/api/appeals', appeals);
     app.use('/api/disturbances', disturbances);
     app.use('/api/users', users);
+    app.use('/api/images', images);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

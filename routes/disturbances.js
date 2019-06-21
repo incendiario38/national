@@ -73,21 +73,24 @@ router.put('/:id/update', (req, res) => {
         .catch((error) => res.status(400).send(error));
 });
 
-router.delete('/:id/delete', (req, res) => {
-    return models.Disturbance
-        .findByPk(req.params.id)
-        .then(disturbance => {
-            if (!disturbance) {
-                return res.status(400).send({
-                    message: 'Disturbance Not Found',
-                });
-            }
-            return disturbance
-                .destroy()
-                .then(() => res.status(204).send())
-                .catch((error) => res.status(400).send(error));
-        })
-        .catch((error) => res.status(400).send(error));
+router.delete('/:id/delete', async (req, res) => {
+    try {
+        const disturbance = await models.Disturbance.findByPk(req.params.id);
+        if (!disturbance) {
+            return res.status(400).send({
+                message: 'Disturbance Not Found',
+            });
+        }
+
+        try {
+            await disturbance.destroy();
+            return res.status(204).send()
+        } catch (e) {
+            return res.status(400).send(e)
+        }
+    } catch (e) {
+        return res.status(400).send(e)
+    }
 });
 
 module.exports = router;

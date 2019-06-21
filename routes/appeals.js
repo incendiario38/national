@@ -51,6 +51,7 @@ router.get('/:id', (req, res) => {
         .catch((error) => res.status(400).send(error));
 });
 
+// Метод отвечающий за создание заявления
 router.post('/create', (req, res) => {
     return models.Appeal
         .create({
@@ -61,12 +62,13 @@ router.post('/create', (req, res) => {
         })
         .then((appeal) => {
             appeal.linkAppeal = 'http://krsk.dev/';
-            appeal.userID = req.body.userID;
+            appeal.userId = req.body.userId;
             res.status(201).send(appeal)
         })
         .catch((error) => res.status(400).send(error));
 });
 
+// Метод отвечающий за обновление заявления
 router.put('/:id/update', (req, res) => {
     return models.Appeal
         .findByPk(req.params.id, {
@@ -103,6 +105,7 @@ router.put('/:id/update', (req, res) => {
         .catch((error) => res.status(400).send(error));
 });
 
+// Удаление заявления
 router.delete('/:id/delete', (req, res) => {
     return models.Appeal
         .findByPk(req.params.id)

@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
+                len: {
+                    args: [6, 9],
+                    msg: "Number car must be between 6 and 9 characters in length"
+                }
             }
         },
         status: {

@@ -27,19 +27,29 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
+                len: {
+                    args: 3,
+                    msg: "First name must be atleast 3 characters in length"
+                }
             }
         },
         lastName: {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true,
+                len: {
+                    args: 3,
+                    msg: "Last name must be atleast 3 characters in length"
+                }
             }
         },
         patronymic: DataTypes.STRING,
         email: {
             type: DataTypes.STRING,
             validate: {
-                isEmail: true,
+                isEmail: {
+                    msq: "Email address must be valid"
+                },
                 notEmpty: true,
             },
             unique: true
