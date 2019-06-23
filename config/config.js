@@ -12,7 +12,11 @@ let config = {
         password: process.env.DB_PASS,
         options: {
             host: process.env.DB_HOST,
-            dialect: 'postgres'
+            port: process.env.DB_PORT,
+            dialect: 'postgres',
+			dialectOptions: {
+				ssl: true
+			}
         }
     },
     development: {
@@ -20,7 +24,11 @@ let config = {
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
         host: process.env.DB_HOST,
-        dialect: 'postgres'
+        port: process.env.DB_PORT,
+        dialect: 'postgres',
+		dialectOptions: {
+			ssl: true
+		}
     }
 };
 
